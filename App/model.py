@@ -43,12 +43,18 @@ def newCatalog():
     una lista vacia para los generos y una lista vacia para la asociación
     generos y libros. Retorna el catalogo inicializado.
     """
-    catalog = {'books': None,
-               'authors': None,
+    catalog = {'videos': None,
+               'title': None,
+               'chnnel_title': None,
+               'trending_date': None,
+               'country': None,
+               'views': None,
+               'likes': None,
+               'dislikes': None,
                'tags': None,
-               'book_tags': None}
+               }
 
-    catalog['books'] = lt.newList()
+    catalog['videos'] = lt.newList()
     catalog['authors'] = lt.newList('ARRAY_LIST',
                                     cmpfunction=compareauthors)
     catalog['tags'] = lt.newList('SINGLE_LINKED',
@@ -57,9 +63,9 @@ def newCatalog():
 
     return catalog
 # Funciones para agregar informacion al catalogo
-def addBook(catalog, book):
+def addvideo(catalog, video):
     # Se adiciona el libro a la lista de libros
-    lt.addLast(catalog['books'], book)
+    lt.addLast(catalog['videos'], video)
     # Se obtienen los autores del libro
     authors = book['authors'].split(",")
     # Cada autor, se crea en la lista de libros del catalogo, y se
