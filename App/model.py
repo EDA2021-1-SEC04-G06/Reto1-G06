@@ -44,35 +44,33 @@ def newCatalog():
     generos y libros. Retorna el catalogo inicializado.
     """
     catalog = {'videos': None,
-               'title': None,
-               'chnnel_title': None,
-               'trending_date': None,
-               'country': None,
-               'views': None,
-               'likes': None,
-               'dislikes': None,
-               'tags': None,
+               'categorias': None
                }
 
-    catalog['videos'] = lt.newList()
-    catalog['authors'] = lt.newList('ARRAY_LIST',
-                                    cmpfunction=compareauthors)
-    catalog['tags'] = lt.newList('SINGLE_LINKED',
-                                 cmpfunction=comparetagnames)
-    catalog['book_tags'] = lt.newList('SINGLE_LINKED')
+    catalog['videos'] = lt.newList('ARRAY_LIST')
+    catalog['categorias'] = lt.newList('ARRAY_LIST')
 
     return catalog
+
 # Funciones para agregar informacion al catalogo
-def addvideo(catalog, video):
-    # Se adiciona el libro a la lista de libros
+def addVideo(catalog, video):
     lt.addLast(catalog['videos'], video)
-    # Se obtienen los autores del libro
-    authors = book['authors'].split(",")
-    # Cada autor, se crea en la lista de libros del catalogo, y se
-    # crea un libro en la lista de dicho autor (apuntador al libro)
-    for author in authors:
-        addBookAuthor(catalog, author.strip(), book)
+
+def addCategorias(catalog, categoria):
+    c = newCat(categoria['name'], categoria['id'])
+    lt.addLast(catalog['categorias'], c)
+   
 # Funciones para creacion de datos
+
+def newCat(name, id):
+    """
+    Esta estructura almancena los tags utilizados para marcar libros.
+    """
+
+    cat = {'name': '', 'id': ''}
+    cat['name'] = name
+    cat['id'] = id
+    return cat
 
 # Funciones de consulta
 

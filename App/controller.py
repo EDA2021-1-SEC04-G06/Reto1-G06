@@ -60,9 +60,13 @@ def loadCategorias(catalog):
     Carga todos las categorias del archivo.
     """
     catefile = cf.data_dir + 'category-id.csv'
-    input_file = csv.DictReader(open(catefile, encoding='utf-8'))
-    for cate in input_file:
-        model.addTag(catalog, cate)
+    catfil = open(catefile)
+    csvin = csv.reader(catfil, delimiter='\t')
+    data = [row for row in csvin]
+    header = data.pop(0)
+    for row in data:
+        rowdict = dict(zip(header, row))
+        model.addCategorias(catalog, rowdict)
 
 # Funciones de ordenamiento
 
