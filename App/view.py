@@ -37,19 +37,19 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- Consultar cuales son los n videos con mas views de determinado pais y categoria")
-    print("3- Consultar video que mas dias ha sio trending para determinado pais")
-    print("4- onsultar video que mas dias ha sio trending para determinada categoria")
-    print("5- Consultar cuales son los n videos con mas likes en un pais con tag especifico")
+    print("2- Requerimiento 1 : Consultar cuales son los n videos con mas views de determinado pais y categoria")
+    print("3- Requerimiento 2 : Consultar video que mas dias ha sio trending para determinado pais")
+    print("4- Requerimiento 3 : Consultar video que mas dias ha sio trending para determinada categoria")
+    print("5- Requerimiento 4 : Consultar cuales son los n videos con mas likes en un pais con tag especifico")
     print("0- Salir")
 
 catalog = None
 
-def initCatalog():
+def initCatalog(tipo):
     """
     Inicializa el catalogo de libros
     """
-    return controller.initCatalog()
+    return controller.initCatalog(tipo)
 
 
 def loadData(catalog):
@@ -57,6 +57,16 @@ def loadData(catalog):
     Carga los libros en la estructura de datos
     """
     controller.loadData(catalog)
+
+def printResults1(ord_vid, sample): 
+    size = lt.size(ord_vid) 
+    if size >= float(sample): 
+        print("Los  ", sample, " videos con mas views son:") 
+        i=0 
+        while i <= float(sample): 
+            videoo = lt.getElement(ord_vid,i) 
+            print('Fecha de popularidad: '+videoo['trending_date'] +' Titulo: ' + videoo['title'] + ' Nombre del canal: '+videoo['channel_title']+' Fecha de publicacion: '+videoo['publish_time']+' Views: '+videoo['views']+' Likes: '+videoo['likes']+' Dislikes: '+videoo['dislikes']) 
+            i+=1
 
 """
 Menu principal
@@ -66,12 +76,23 @@ while True:
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
-        catalog = initCatalog()
+        tipo = input('Ingrese el tipo de representacion de las listas: ( ARRAY_LIST o LINKED_LIST ) \n')
+        catalog = initCatalog(tipo)
         loadData(catalog)
         print('Videos cargados: ' + str(lt.size(catalog['videos'])))
-        print('Categorias cargados: ' + str(lt.size(catalog['categorias'])))
+        primero = lt.firstElement(catalog['videos'])
+        print("Info primer libro cargado: \n")
+        print("Titulo :"+ str(primero['title']))
+        print(catalog['categorias'])
+            
     elif int(inputs[0]) == 2:
-        pass
+        size = input("Indique tamaño de la muestra: ")
+        tipodeorden = input("Indique el tipo de ordenamiento iterativo que quiere aplicar: ( selection, insertion o shell ) \n")
+        result = controller.requerimiento1(catalog, int(size) , tipodeorden)
+        printResults1(result[1], size)
+        print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
+                                          str(result[0]))
+        
 
     else:
         sys.exit(0)
