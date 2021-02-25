@@ -89,7 +89,7 @@ while True:
         size = input("Indique tamaño de la muestra: ")
         tipodeorden = input("Indique el tipo de ordenamiento iterativo que quiere aplicar: ( selection, insertion o shell ) \n")
         result = controller.requerimiento1(catalog, int(size) , tipodeorden)
-        printResults1(result[1], size)
+        #printResults1(result[1], size)
         print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
                                           str(result[0]))
         
