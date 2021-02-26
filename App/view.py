@@ -75,10 +75,10 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        print("Cargando información de los archivos ....")
         tipo = input('Ingrese el tipo de representacion de las listas: ( ARRAY_LIST o LINKED_LIST ) \n')
         catalog = initCatalog(tipo)
         loadData(catalog)
+        print("Cargando información de los archivos ....")
         print('Videos cargados: ' + str(lt.size(catalog['videos'])))
         primero = lt.firstElement(catalog['videos'])
         print("Info primer libro cargado: \n")
@@ -87,7 +87,7 @@ while True:
             
     elif int(inputs[0]) == 2:
         size = input("Indique tamaño de la muestra: ")
-        tipodeorden = input("Indique el tipo de ordenamiento iterativo que quiere aplicar: ( selection, insertion o shell ) \n")
+        tipodeorden = input("Indique el tipo de ordenamiento iterativo que quiere aplicar: ( selection, insertion, shell, quick o merge ) \n")
         result = controller.requerimiento1(catalog, int(size) , tipodeorden)
         #printResults1(result[1], size)
         print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",

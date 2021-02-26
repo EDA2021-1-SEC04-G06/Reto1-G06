@@ -31,6 +31,8 @@ from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
 from DISClib.Algorithms.Sorting import insertionsort as si
 from DISClib.Algorithms.Sorting import selectionsort as ss
+from DISClib.Algorithms.Sorting import mergesort as sm
+from DISClib.Algorithms.Sorting import quicksort as sq
 assert cf
 
 """
@@ -99,6 +101,10 @@ def requerimiento1(catalog, size,tipodeorden):
         sorted_list = si.sort(sublista, cmpVideosByViews)
     elif (tipodeorden=="selection"):
         sorted_list = ss.sort(sublista, cmpVideosByViews)
+    elif (tipodeorden=="quick"):
+        sorted_list = sq.sort(sublista, cmpVideosByViews)
+    elif (tipodeorden=="merge"):
+        sorted_list = sm.sort(sublista, cmpVideosByViews)
     stop_time = time.process_time() 
     elapsed_time_mseg = (stop_time - start_time)*1000 
     return elapsed_time_mseg, sorted_list
