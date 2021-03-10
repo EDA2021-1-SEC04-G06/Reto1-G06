@@ -62,17 +62,26 @@ def printResults1(ord_vid, sample):
     size = lt.size(ord_vid) 
     if size >= float(sample): 
         print("Los  ", sample, " videos con mas views son:") 
-        i=0 
+        i=1 
         while i <= float(sample): 
             videoo = lt.getElement(ord_vid,i) 
-            print('Fecha de popularidad: '+videoo['trending_date'] +' Titulo: ' + videoo['title'] + ' Nombre del canal: '+videoo['channel_title']+' Fecha de publicacion: '+videoo['publish_time']+' Views: '+videoo['views']+' Likes: '+videoo['likes']+' Dislikes: '+videoo['dislikes']) 
+            print('Fecha de popularidad: '+videoo['trending_date'] +' Titulo: ' + videoo['title'] + ' Nombre del canal: '+videoo['channel_title']+' Fecha de publicacion: '+videoo['publish_time']+' Views: '+videoo['views']+' Likes: '+videoo['likes']+' Dislikes: '+videoo['dislikes']+"\n") 
             i+=1
+
+def buscarcateporname(categg):
+    for i in range(0,lt.size(catalog['categorias'])):
+            cate = lt.getElement(catalog['categorias'], i)
+            if categg in str(cate['name']):
+                return cate['id']
+    return "ERROR"
 
 """
 Menu principal
 """
 while True:
+    tipo = "ARRAY_LIST"
     printMenu()
+    
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
         tipo = input('Ingrese el tipo de representacion de las listas: ( ARRAY_LIST o LINKED_LIST ) \n')
@@ -82,7 +91,7 @@ while True:
         print('Videos cargados: ' + str(lt.size(catalog['videos'])))
         primero = lt.firstElement(catalog['videos'])
         print("Info primer libro cargado: ")
-        print(" Titulo: "+ str(primero['title'])+"\n Nombre del canal: "+ str(primero['channel_title'])+"\n Fecha de popularidad: "+ str(primero['trending_date'])+"\n Pais: "+ str(primero['country'])+"\n Vistas: "+ str(primero['views']) + "\n Likes: "+ str(primero['likes'])+"\n Dislikes: "+ str(primero['dislikes'])+"\n")
+        print(" Titulo: "+ str(primero['title'])+"\n Nombre del canal: "+ str(primero['channel_title'])+"\n Fecha de popularidad: "+ str(primero['trending_date'])+"\n Pais: "+ str(primero['country'])+"\n Vistas: "+ str(primero['views']) + "\n Likes: "+ str(primero['likes'])+"\n Dislikes: "+ str(primero['dislikes'])+"\n Categoria: "+ str(primero['category_id'])+"\n")
         print("Categorias :")
         print("Nombre , id" )
         for i in range(0,lt.size(catalog['categorias'])):
@@ -92,10 +101,16 @@ while True:
         
             
     elif int(inputs[0]) == 2:
+        categg=input("Indique la categoria: ")
+        categ=buscarcateporname(categg)
+        pais=input("Indique el pais: ")
         size = input("Indique tamaño de la muestra: ")
-        tipodeorden = input("Indique el tipo de ordenamiento iterativo que quiere aplicar: ( selection, insertion, shell, quick o merge ) \n")
-        result = controller.requerimiento1(catalog, int(size) , tipodeorden)
-        #printResults1(result[1], size)
+        tipodeorden = input("Indique el tipo de ordenamiento que quiere aplicar: ( selection, insertion, shell, quick o merge ) \n")
+        result = controller.requerimiento1(catalog, int(size), tipodeorden, categ, pais, tipo)
+        if lt.size(result[1])<=0:
+            print("No hay sufiecientes videos que cumplan las condiciones ")
+        else:
+            printResults1(result[1], size)
         print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
                                           str(result[0]))
         

@@ -41,6 +41,7 @@ los mismos.
 """
 
 # Construccion de modelos
+
 def newCatalog(tipo):
     """
     Inicializa el catálogo de libros. Crea una lista vacia para guardar
@@ -59,7 +60,8 @@ def newCatalog(tipo):
 
 # Funciones para agregar informacion al catalogo
 def addVideo(catalog, video):
-    lt.addLast(catalog['videos'], video)
+    v = newVid(video['title'],video['channel_title'],video['trending_date'],video['publish_time'],video['views'],video['likes'],video['dislikes'],video['category_id'],video['country'],video['tags'])
+    lt.addLast(catalog['videos'], v)
 
 def addCategorias(catalog, categoria):
     c = newCat(categoria['name'], categoria['id'])
@@ -67,6 +69,19 @@ def addCategorias(catalog, categoria):
    
 # Funciones para creacion de datos
 
+def newVid(title, channel_title,trending_date,publish_time,views,likes,dislikes,category_id,country,tags):
+    vid={'title':'','channel_title':'','trending_date':'','publish_time':'','views':'','likes':'','dislikes':'','category_id':'','country':'','tags':''}
+    vid['title']=title
+    vid['channel_title']=channel_title
+    vid['trending_date']=trending_date
+    vid['publish_time']=publish_time
+    vid['views']=views
+    vid['likes']=likes
+    vid['dislikes']=dislikes
+    vid['category_id']=category_id
+    vid['country']=country
+    vid['tags']=tags
+    return vid
 def newCat(name, id):
     """
     Esta estructura almancena los tags utilizados para marcar libros.
@@ -87,13 +102,17 @@ def cmpVideosByViews(video1, video2):
         video1: informacion del primer video que incluye su valor 'views' 
         video2: informacion del segundo video que incluye su valor 'views'
     """
-    return (float(video1['views']) < float(video2['views']))
+    return (float(video1['views']) > float(video2['views']))
 
 # Funciones de ordenamiento
 
-def requerimiento1(catalog, size,tipodeorden): 
-    sublista = lt.subList(catalog['videos'], 0, size) 
-    sublista = sublista.copy() 
+def requerimiento1(catalog, size, tipodeorden, categ, pais, tipo): 
+    nueva= lt.newList(tipo)
+    for i in range(0, lt.size(catalog['videos'])):
+        ele=lt.getElement(catalog['videos'],i)
+        if ele['category_id'] == categ and ele['country'] == pais:
+            lt.addLast(nueva,ele)
+    sublista = nueva.copy() 
     start_time = time.process_time() 
     if(tipodeorden=="shell"):
         sorted_list = sa.sort(sublista, cmpVideosByViews)

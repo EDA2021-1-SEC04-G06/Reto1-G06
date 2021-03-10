@@ -70,8 +70,8 @@ def loadCategorias(catalog):
 
 # Funciones de ordenamiento
 
-def requerimiento1(catalog, size, tipodeorden):
+def requerimiento1(catalog, size, tipodeorden, categ, pais, tipo ):
 
-    return model.requerimiento1(catalog,size,tipodeorden)
+    return model.requerimiento1(catalog,size,tipodeorden, categ, pais, tipo)
     
 # Funciones de consulta sobre el catálogo
