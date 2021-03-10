@@ -81,9 +81,15 @@ while True:
         print("Cargando información de los archivos ....")
         print('Videos cargados: ' + str(lt.size(catalog['videos'])))
         primero = lt.firstElement(catalog['videos'])
-        print("Info primer libro cargado: \n")
-        print("Titulo :"+ str(primero['title']))
-        print(catalog['categorias'])
+        print("Info primer libro cargado: ")
+        print(" Titulo: "+ str(primero['title'])+"\n Nombre del canal: "+ str(primero['channel_title'])+"\n Fecha de popularidad: "+ str(primero['trending_date'])+"\n Pais: "+ str(primero['country'])+"\n Vistas: "+ str(primero['views']) + "\n Likes: "+ str(primero['likes'])+"\n Dislikes: "+ str(primero['dislikes'])+"\n")
+        print("Categorias :")
+        print("Nombre , id" )
+        for i in range(0,lt.size(catalog['categorias'])):
+            cate = lt.getElement(catalog['categorias'], i)
+            print(str(cate['name'])+" , "+str(cate['id']))
+
+        
             
     elif int(inputs[0]) == 2:
         size = input("Indique tamaño de la muestra: ")
