@@ -129,23 +129,22 @@ while True:
             print( " Pais: "+ str(primero['country']))
             print( " Dias: "+ str(primero['dias']))
 
-    elif int(inputs[0]==4)
+    elif int(inputs[0]) == 4 :
 
-        
-        repuesta = controller.requerimiento3(catalog,category_name)
-        category_name= input("indique nombre de categoria")
+        category_name= input("indique nombre de categoria: ")
+        categor = buscarcateporname(category_name)
+         tipodeorden = input("Indique el tipo de ordenamiento que quiere aplicar: ( selection, insertion, shell, quick o merge ) \n")
+        repuesta = controller.requerimiento2(catalog,categor,tipodeorden,tipo)
         if lt.size(repuesta)<=0:
             print("No hay sufiecientes videos que cumplan las condiciones ")
         else:
-            primero=lt.firstElement(respuesta)
+            primero=lt.firstElement(repuesta)
+            print(" El video con mas dias en tendencia de " + str(pais) +" es: ")
             print( " Titulo: "+ str(primero['title']))
             print( " Nombre del canal: "+ str(primero['channel_title']))
-            print( " categoria: "+ str(primero['category_id']))
+            print( " Pais: "+ str(primero['country']))
             print( " Dias: "+ str(primero['dias']))
 
     else: 
         sys.exit(0)
-
-
-
 sys.exit(0)
