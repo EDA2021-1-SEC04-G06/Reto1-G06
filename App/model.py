@@ -160,5 +160,4 @@ def requerimiento2(catalog,pais,tipodeorden,tipo):
     stop_time = time.process_time() 
     elapsed_time_mseg = (stop_time - start_time)*1000 
     
-    
     return sorted_list

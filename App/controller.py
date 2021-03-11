@@ -76,4 +76,4 @@ def requerimiento1(catalog, size, tipodeorden, categ, pais, tipo ):
     
 def requerimiento2(catalog,pais,tipodeorden,tipo):
 
-    return model.requerimiento2(catalog,pais,tipodeorden,tipo)
+    return model.requerimiento2(catalog, pais, tipodeorden,tipo)
