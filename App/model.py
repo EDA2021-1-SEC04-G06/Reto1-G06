@@ -104,6 +104,10 @@ def cmpVideosByViews(video1, video2):
     """
     return (float(video1['views']) > float(video2['views']))
 
+def cmpVideosBytiempo(video1, video2):
+   return (float(video1['dias']) > float(video2['dias']))
+
+
 # Funciones de ordenamiento
 
 def requerimiento1(catalog, size, tipodeorden, categ, pais, tipo): 
@@ -127,3 +131,34 @@ def requerimiento1(catalog, size, tipodeorden, categ, pais, tipo):
     stop_time = time.process_time() 
     elapsed_time_mseg = (stop_time - start_time)*1000 
     return elapsed_time_mseg, sorted_list
+
+def requerimiento2(catalog,pais,tipodeorden,tipo):
+    nueva= lt.newList(tipo)
+    listaesta={}
+    for i in range(0, lt.size(catalog['videos'])):
+        ele=lt.getElement(catalog['videos'],i)
+        if ele['country'] == pais and not(ele['title'] in listaesta.keys()):
+            listaesta[ele['title']]=1
+            ele['dias'] = 1 
+            lt.addLast(nueva,ele)
+        elif ele['country'] == pais and (  ele['title'] in listaesta.keys()):
+            listaesta[ele['title']]=listaesta[ele['title']]+1
+            ele['dias'] = listaesta[ele['title']]
+            lt.addLast(nueva,ele)
+    sublista = nueva.copy() 
+    start_time = time.process_time()
+    if(tipodeorden=="shell"):
+        sorted_list = sa.sort(sublista, cmpVideosBytiempo)
+    elif (tipodeorden=="insertion"):
+        sorted_list = si.sort(sublista, cmpVideosBytiempo)
+    elif (tipodeorden=="selection"):
+        sorted_list = ss.sort(sublista, cmpVideosBytiempo)
+    elif (tipodeorden=="quick"):
+        sorted_list = sq.sort(sublista, cmpVideosBytiempo)
+    elif (tipodeorden=="merge"):
+        sorted_list = sm.sort(sublista, cmpVideosBytiempo)
+    stop_time = time.process_time() 
+    elapsed_time_mseg = (stop_time - start_time)*1000 
+    
+    
+    return sorted_list

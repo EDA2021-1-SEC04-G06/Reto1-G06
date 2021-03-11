@@ -101,9 +101,9 @@ while True:
         
             
     elif int(inputs[0]) == 2:
-        categg=input("Indique la categoria: ")
-        categ=buscarcateporname(categg)
-        pais=input("Indique el pais: ")
+        categg = input("Indique la categoria: ")
+        categ = buscarcateporname(categg)
+        pais = input("Indique el pais: ")
         size = input("Indique tamaño de la muestra: ")
         tipodeorden = input("Indique el tipo de ordenamiento que quiere aplicar: ( selection, insertion, shell, quick o merge ) \n")
         result = controller.requerimiento1(catalog, int(size), tipodeorden, categ, pais, tipo)
@@ -113,8 +113,21 @@ while True:
             printResults1(result[1], size)
         print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
                                           str(result[0]))
-        
 
+    elif int(inputs[0]) == 3:
+        
+        pais = input("Indique el pais: ")
+        tipodeorden = input("Indique el tipo de ordenamiento que quiere aplicar: ( selection, insertion, shell, quick o merge ) \n")
+        repuesta = controller.requerimiento2(catalog,pais,tipodeorden,tipo)
+        if lt.size(repuesta)<=0:
+            print("No hay sufiecientes videos que cumplan las condiciones ")
+        else:
+            primero=lt.firstElement(repuesta)
+            print(" El video con mas dias en tendencia de " + str(pais) +" es: ")
+            print( " Titulo: "+ str(primero['title']))
+            print( " Nombre del canal: "+ str(primero['channel_title']))
+            print( " Pais: "+ str(primero['country']))
+            print( " Dias: "+ str(primero['dias']))
     else:
         sys.exit(0)
 sys.exit(0)

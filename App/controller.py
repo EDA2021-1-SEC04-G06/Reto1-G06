@@ -68,10 +68,12 @@ def loadCategorias(catalog):
         rowdict = dict(zip(header, row))
         model.addCategorias(catalog, rowdict)
 
-# Funciones de ordenamiento
+# Funciones de consulta sobre el catálogo
 
 def requerimiento1(catalog, size, tipodeorden, categ, pais, tipo ):
 
     return model.requerimiento1(catalog,size,tipodeorden, categ, pais, tipo)
     
-# Funciones de consulta sobre el catálogo
+def requerimiento2(catalog,pais,tipodeorden,tipo):
+
+    return model.requerimiento2(catalog,pais,tipodeorden,tipo)
