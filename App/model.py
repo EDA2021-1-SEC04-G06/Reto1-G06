@@ -96,17 +96,14 @@ def newCat(name, id):
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 def cmpVideosByViews(video1, video2): 
-    """ 
-    Devuelve verdadero (True) si los 'views' de video1 son menores que los del video2 
-    Args: 
-        video1: informacion del primer video que incluye su valor 'views' 
-        video2: informacion del segundo video que incluye su valor 'views'
-    """
+
     return (float(video1['views']) > float(video2['views']))
 
 def cmpVideosBytiempo(video1, video2):
    return (float(video1['dias']) > float(video2['dias']))
 
+def cmpVideosByLikes(video1, video2):
+   return (float(video1['likes']) > float(video2['likes']))
 
 # Funciones de ordenamiento
 
@@ -163,16 +160,16 @@ def requerimiento2(catalog,pais,tipodeorden,tipo):
 
 def requerimiento3(catalog,categor,tipodeorden,tipo):
     nueva= lt.newList(tipo)
-    listaesta={}
+    listae={}
     for i in range(0, lt.size(catalog['videos'])):
         ele=lt.getElement(catalog['videos'],i)
-        if ele['category_id'] == categor and not(ele['title'] in listaesta.keys()):
-            listaesta[ele['title']]=1
+        if ele['category_id'] == categor and not(ele['title'] in listae.keys()):
+            listae[ele['title']]=1
             ele['dias'] = 1 
             lt.addLast(nueva,ele)
-        elif ele['category_id'] == categor and (  ele['title'] in listaesta.keys()):
-            listaesta[ele['title']]=listaesta[ele['title']]+1
-            ele['dias'] = listaesta[ele['title']]
+        elif ele['category_id'] == categor and (  ele['title'] in listae.keys()):
+            listae[ele['title']]=listae[ele['title']]+1
+            ele['dias'] = listae[ele['title']]
             lt.addLast(nueva,ele)
     sublista = nueva.copy() 
     start_time = time.process_time()
@@ -189,3 +186,35 @@ def requerimiento3(catalog,categor,tipodeorden,tipo):
     stop_time = time.process_time() 
     elapsed_time_mseg = (stop_time - start_time)*1000 
     return sorted_list
+
+def requerimiento4(catalog, size, tipodeorden, tagg, tipo): 
+    nueva = lt.newList(tipo)
+    final = lt.newList(tipo)
+    listaee=[]
+    for i in range(0, lt.size(catalog['videos'])):
+        ele=lt.getElement(catalog['videos'],i)
+        
+        if tagg in ele['tags'] :
+            lt.addLast(nueva,ele)
+    sublista = nueva.copy() 
+    start_time = time.process_time() 
+    if(tipodeorden=="shell"):
+        sorted_list = sa.sort(sublista, cmpVideosByLikes)
+    elif (tipodeorden=="insertion"):
+        sorted_list = si.sort(sublista, cmpVideosByLikes)
+    elif (tipodeorden=="selection"):
+        sorted_list = ss.sort(sublista, cmpVideosByLikes)
+    elif (tipodeorden=="quick"):
+        sorted_list = sq.sort(sublista, cmpVideosByLikes)
+    elif (tipodeorden=="merge"):
+        sorted_list = sm.sort(sublista, cmpVideosByLikes)
+    stop_time = time.process_time() 
+    elapsed_time_mseg = (stop_time - start_time)*1000 
+
+    for i in range(0, lt.size(sorted_list)):
+        ete=lt.getElement(sorted_list,i)
+        if not(ete['title'] in listaee) :
+            listaee.append(ete['title'])
+            lt.addLast(final,ete)
+
+    return elapsed_time_mseg, final

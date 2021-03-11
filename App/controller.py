@@ -82,3 +82,7 @@ def requerimiento3(catalog,categor,tipodeorden,tipo):
 
     return model.requerimiento3(catalog,categor,tipodeorden,tipo)
 
+
+def requerimiento4(catalog, size, tipodeorden, tagg, tipo ):
+
+    return model.requerimiento4(catalog,size,tipodeorden, tagg, tipo)

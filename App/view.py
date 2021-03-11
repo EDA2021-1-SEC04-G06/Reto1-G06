@@ -68,6 +68,16 @@ def printResults1(ord_vid, sample):
             print('Fecha de popularidad: '+videoo['trending_date'] +' Titulo: ' + videoo['title'] + ' Nombre del canal: '+videoo['channel_title']+' Fecha de publicacion: '+videoo['publish_time']+' Views: '+videoo['views']+' Likes: '+videoo['likes']+' Dislikes: '+videoo['dislikes']+"\n") 
             i+=1
 
+def printResults4(ord_vid, sample): 
+    size = lt.size(ord_vid) 
+    if size >= float(sample): 
+        print("Los  ", sample, " videos con mas likes son:") 
+        i=2 
+        while i <= float(sample)+1: 
+            videoo = lt.getElement(ord_vid,i) 
+            print('Fecha de popularidad: '+videoo['trending_date'] +' Titulo: ' + videoo['title'] + ' Nombre del canal: '+videoo['channel_title']+' Fecha de publicacion: '+videoo['publish_time']+' Views: '+videoo['views']+' Likes: '+videoo['likes']+' Dislikes: '+videoo['dislikes']+  ' Tags: '+videoo['tags'] +"\n") 
+            i+=1
+
 def buscarcateporname(categg):
     for i in range(0,lt.size(catalog['categorias'])):
             cate = lt.getElement(catalog['categorias'], i)
@@ -133,18 +143,29 @@ while True:
 
         category_name= input("indique nombre de categoria: ")
         categor = buscarcateporname(category_name)
-         tipodeorden = input("Indique el tipo de ordenamiento que quiere aplicar: ( selection, insertion, shell, quick o merge ) \n")
-        repuesta = controller.requerimiento2(catalog,categor,tipodeorden,tipo)
+        tipodeorden = input("Indique el tipo de ordenamiento que quiere aplicar: ( selection, insertion, shell, quick o merge ) \n")
+        repuesta = controller.requerimiento3(catalog,categor,tipodeorden,tipo)
         if lt.size(repuesta)<=0:
             print("No hay sufiecientes videos que cumplan las condiciones ")
         else:
             primero=lt.firstElement(repuesta)
-            print(" El video con mas dias en tendencia de " + str(pais) +" es: ")
+            print(" El video con mas dias en tendencia de " + str(category_name) +" es: ")
             print( " Titulo: "+ str(primero['title']))
             print( " Nombre del canal: "+ str(primero['channel_title']))
-            print( " Pais: "+ str(primero['country']))
+            print( " Categoria: "+ str(primero['category_id']))
             print( " Dias: "+ str(primero['dias']))
 
+    elif int(inputs[0]) == 5 :
+        tagg = input("Indique el tag: ")
+        size = input("Indique tamaño de la muestra: ")
+        tipodeorden = input("Indique el tipo de ordenamiento que quiere aplicar: ( selection, insertion, shell, quick o merge ) \n")
+        result = controller.requerimiento4(catalog, int(size), tipodeorden, tagg, tipo)
+        if lt.size(result[1])<=0:
+            print("No hay sufiecientes videos que cumplan las condiciones ")
+        else:
+            printResults4(result[1], size)
+        print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
+                                          str(result[0]))
     else: 
         sys.exit(0)
 sys.exit(0)
