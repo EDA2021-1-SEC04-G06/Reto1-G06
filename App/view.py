@@ -128,6 +128,24 @@ while True:
             print( " Nombre del canal: "+ str(primero['channel_title']))
             print( " Pais: "+ str(primero['country']))
             print( " Dias: "+ str(primero['dias']))
-    else:
+
+    elif int(inputs[0]==4)
+
+        
+        repuesta = controller.requerimiento3(catalog,category_name)
+        category_name= input("indique nombre de categoria")
+        if lt.size(repuesta)<=0:
+            print("No hay sufiecientes videos que cumplan las condiciones ")
+        else:
+            primero=lt.firstElement(respuesta)
+            print( " Titulo: "+ str(primero['title']))
+            print( " Nombre del canal: "+ str(primero['channel_title']))
+            print( " categoria: "+ str(primero['category_id']))
+            print( " Dias: "+ str(primero['dias']))
+
+    else: 
         sys.exit(0)
+
+
+
 sys.exit(0)

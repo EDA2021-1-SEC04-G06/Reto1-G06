@@ -34,6 +34,7 @@ from DISClib.Algorithms.Sorting import selectionsort as ss
 from DISClib.Algorithms.Sorting import mergesort as sm
 from DISClib.Algorithms.Sorting import quicksort as sq
 assert cf
+from DISClib.Algorithms.Sorting import listiterator as ite 
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
@@ -41,7 +42,6 @@ los mismos.
 """
 
 # Construccion de modelos
-
 def newCatalog(tipo):
     """
     Inicializa el catálogo de libros. Crea una lista vacia para guardar
@@ -60,8 +60,7 @@ def newCatalog(tipo):
 
 # Funciones para agregar informacion al catalogo
 def addVideo(catalog, video):
-    v = newVid(video['title'],video['channel_title'],video['trending_date'],video['publish_time'],video['views'],video['likes'],video['dislikes'],video['category_id'],video['country'],video['tags'])
-    lt.addLast(catalog['videos'], v)
+    lt.addLast(catalog['videos'], video)
 
 def addCategorias(catalog, categoria):
     c = newCat(categoria['name'], categoria['id'])
@@ -69,19 +68,6 @@ def addCategorias(catalog, categoria):
    
 # Funciones para creacion de datos
 
-def newVid(title, channel_title,trending_date,publish_time,views,likes,dislikes,category_id,country,tags):
-    vid={'title':'','channel_title':'','trending_date':'','publish_time':'','views':'','likes':'','dislikes':'','category_id':'','country':'','tags':''}
-    vid['title']=title
-    vid['channel_title']=channel_title
-    vid['trending_date']=trending_date
-    vid['publish_time']=publish_time
-    vid['views']=views
-    vid['likes']=likes
-    vid['dislikes']=dislikes
-    vid['category_id']=category_id
-    vid['country']=country
-    vid['tags']=tags
-    return vid
 def newCat(name, id):
     """
     Esta estructura almancena los tags utilizados para marcar libros.
@@ -102,21 +88,13 @@ def cmpVideosByViews(video1, video2):
         video1: informacion del primer video que incluye su valor 'views' 
         video2: informacion del segundo video que incluye su valor 'views'
     """
-    return (float(video1['views']) > float(video2['views']))
-
-def cmpVideosBytiempo(video1, video2):
-   return (float(video1['dias']) > float(video2['dias']))
-
+    return (float(video1['views']) < float(video2['views']))
 
 # Funciones de ordenamiento
 
-def requerimiento1(catalog, size, tipodeorden, categ, pais, tipo): 
-    nueva= lt.newList(tipo)
-    for i in range(0, lt.size(catalog['videos'])):
-        ele=lt.getElement(catalog['videos'],i)
-        if ele['category_id'] == categ and ele['country'] == pais:
-            lt.addLast(nueva,ele)
-    sublista = nueva.copy() 
+def requerimiento1(catalog, size,tipodeorden): 
+    sublista = lt.subList(catalog['videos'], 0, size) 
+    sublista = sublista.copy() 
     start_time = time.process_time() 
     if(tipodeorden=="shell"):
         sorted_list = sa.sort(sublista, cmpVideosByViews)
@@ -130,34 +108,44 @@ def requerimiento1(catalog, size, tipodeorden, categ, pais, tipo):
         sorted_list = sm.sort(sublista, cmpVideosByViews)
     stop_time = time.process_time() 
     elapsed_time_mseg = (stop_time - start_time)*1000 
-    return elapsed_time_mseg, sorted_list
-
-def requerimiento2(catalog,pais,tipodeorden,tipo):
-    nueva= lt.newList(tipo)
-    listaesta={}
-    for i in range(0, lt.size(catalog['videos'])):
-        ele=lt.getElement(catalog['videos'],i)
-        if ele['country'] == pais and not(ele['title'] in listaesta.keys()):
-            listaesta[ele['title']]=1
-            ele['dias'] = 1 
-            lt.addLast(nueva,ele)
-        elif ele['country'] == pais and (  ele['title'] in listaesta.keys()):
-            listaesta[ele['title']]=listaesta[ele['title']]+1
-            ele['dias'] = listaesta[ele['title']]
-            lt.addLast(nueva,ele)
-    sublista = nueva.copy() 
-    start_time = time.process_time()
-    if(tipodeorden=="shell"):
-        sorted_list = sa.sort(sublista, cmpVideosBytiempo)
-    elif (tipodeorden=="insertion"):
-        sorted_list = si.sort(sublista, cmpVideosBytiempo)
-    elif (tipodeorden=="selection"):
-        sorted_list = ss.sort(sublista, cmpVideosBytiempo)
-    elif (tipodeorden=="quick"):
-        sorted_list = sq.sort(sublista, cmpVideosBytiempo)
-    elif (tipodeorden=="merge"):
-        sorted_list = sm.sort(sublista, cmpVideosBytiempo)
-    stop_time = time.process_time() 
-    elapsed_time_mseg = (stop_time - start_time)*1000 
-    
     return sorted_list
+
+def requerimiento3(category_name, list, categories)->dict:
+    for i in categories:
+        if categories[i]== category_name:
+            posicion= int(i)
+
+    maximo=0
+    extra=[]
+    result={}
+    iterador = ite.newIterator(list)
+    contador= 0
+
+    
+    while ite.hasNext(iterador):
+        element= it.next(iterador)
+        centinela= True 
+        contador1= 0
+
+
+        if posicion == int(element["category_id"]):
+            while contador1 < len(extra):
+                if (element["title"])== extra[contador1]["title"]):
+                    extra[contador1]["dias"] += 1
+                    centinela= False
+                contador += 1
+
+        if centinela == True:
+            extra.append({"title":element["title"],"channel_title":element["channel_title"],"category_id":element["category_id"], "dias":1, "dates":str(element["trending_date"])})
+
+
+    while contador < len(extra):
+        if int(extra[contador]["dias"]) > maximo:
+            result["title"]= extra[contador]["title"]
+            result["channel_title"]= extra[contador]["channel_title"]
+            result["category_id"]= posicion
+            result["dias"]=extra[contador]["dias"]
+            maximo= int(extra[contador]["dias"])
+
+        contador += 1
+    return result 
